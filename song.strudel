@@ -1,0 +1,33 @@
+setcpm(115)
+
+$: note(`
+<[g2 bb2 d3 f3]
+ [eb3 g3 bb3 d4]
+ [c3 eb3 g3 bb3]
+ [d3 f3 a3 c4]>
+`)
+  .sound("sawtooth")
+  .attack(.08)
+  .release(.7)
+  .lpf(sine.range(900, 3200).slow(4))
+  .phaser(1.5)
+  .room(.7)
+  .roomsize(6)
+  .delay(.25)
+  .delaytime(.3)
+  .gain(.3)
+
+  $: note(`
+<[g4 bb4 d5]
+ [eb4 g4 bb4]
+ [c5 eb5 g5]
+ [d5 f5 a5]>
+`)
+  .sound("sine")
+  .attack(.15)
+  .release(.9)
+  .room(.9)
+  .roomsize(8)
+  .delay(.35)
+  .delaytime(.4)
+  .gain(.08)

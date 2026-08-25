@@ -1,33 +1,38 @@
-setcpm(115)
-
-$: note(`
-<[g2 bb2 d3 f3]
- [eb3 g3 bb3 d4]
- [c3 eb3 g3 bb3]
- [d3 f3 a3 c4]>
-`)
-  .sound("sawtooth")
-  .attack(.08)
-  .release(.7)
-  .lpf(sine.range(900, 3200).slow(4))
-  .phaser(1.5)
-  .room(.7)
-  .roomsize(6)
-  .delay(.25)
-  .delaytime(.3)
-  .gain(.3)
-
-  $: note(`
-<[g4 bb4 d5]
- [eb4 g4 bb4]
- [c5 eb5 g5]
- [d5 f5 a5]>
-`)
-  .sound("sine")
-  .attack(.15)
-  .release(.9)
-  .room(.9)
-  .roomsize(8)
-  .delay(.35)
-  .delaytime(.4)
-  .gain(.08)
+setcps(115/60/4)
+let chords = chord("<Gm9 Ebmaj7 Bbmaj7 F6>/4").dict('ireal')
+stack(
+  //drums
+  stack(
+    s("bd ~ bd ~").gain(1.5),
+    s("~ sd ~ sd").gain(1.35),
+    s("hh*8").gain(.8)
+  ),
+  //chords
+  chords
+    .voicing()
+    .s("gm_epiano1:1")
+    .phaser(3)
+    .room(.6)
+    .gain(1.15),
+  //bass
+  n("<0 ~ 0 2 5 ~ 3 2 ~>")
+    .set(chords)
+    .mode("root:g2")
+    .voicing()
+    .s("gm_acoustic_bass")
+    .lpf(850)
+    .gain(1.5),
+  //lead
+  chords
+    .n("<0 2 4 2 1 3 2 4>*2")
+    .anchor("D5")
+    .voicing()
+    .s("gm_epiano1:2")
+    .fm(sine.range(2,8).slow(8))
+    .lpf(sine.range(700,2800).slow(8))
+    .lpq(5)
+    .room(.8)
+    .delay(.3)
+    .gain(.65)
+    .mask("<0 0 1 1>")
+)

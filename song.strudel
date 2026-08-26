@@ -1,8 +1,8 @@
 setcps(115/60/4)
-
-let chords = chord("<Gm9 Eb^7 Bb^7 F6>").dict('ireal')
+let chords = chord("\<Gm9 Eb^7 Bb^7 F6>").dict('ireal')
 
 arrange(
+  // intro
   [4,
     chords
       .voicing()
@@ -12,46 +12,18 @@ arrange(
       .gain(1.15)
   ],
 
-  [4,
-    stack(
-      chords
-        .voicing()
-        .s("gm_epiano1:1")
-        .phaser(3)
-        .room(.6)
-        .gain(1.15),
-
-      n("0 ~ 0 2 3 ~ 3 2")
-        .set(chords)
-        .mode("root:g2")
-        .voicing()
-        .s("gm_acoustic_bass")
-        .lpf(900)
-        .gain(1.5),
-
-      n("0 ~ 0 2 ~ 3 2 ~")
-        .set(chords)
-        .mode("root:g1")
-        .voicing()
-        .s("gm_acoustic_bass")
-        .lpf(550)
-        .gain(.8)
-    )
-  ],
-
+  // drums + bass
   [8,
     stack(
-      stack(
-        s("bd ~ bd ~").gain(1.5),
-        s("~ sd ~ sd").gain(1.35),
-        s("hh*8")
-      ),
+      // chords
       chords
         .voicing()
         .s("gm_epiano1:1")
         .phaser(3)
         .room(.6)
         .gain(1.15),
+
+      // bass
       n("0 ~ 0 2 3 ~ 3 2")
         .set(chords)
         .mode("root:g2")
@@ -59,29 +31,26 @@ arrange(
         .s("gm_acoustic_bass")
         .lpf(900)
         .gain(1.5),
-      n("0 ~ 0 2 ~ 3 2 ~")
-        .set(chords)
-        .mode("root:g1")
-        .voicing()
-        .s("gm_acoustic_bass")
-        .lpf(550)
-        .gain(.8)
+
+      // drums
+      s("bd ~ bd ~").gain(1.5),
+      s("~ sd ~ sd").gain(1.35),
+      s("hh*8").gain(.8)
     )
   ],
 
-  [16,
+  // lead
+  [8,
     stack(
-      stack(
-        s("bd ~ bd ~").gain(1.5),
-        s("~ sd ~ sd").gain(1.35),
-        s("hh*8")
-      ),
+      // chords
       chords
         .voicing()
         .s("gm_epiano1:1")
         .phaser(3)
         .room(.6)
         .gain(1.15),
+
+      // bass
       n("0 ~ 0 2 3 ~ 3 2")
         .set(chords)
         .mode("root:g2")
@@ -89,13 +58,121 @@ arrange(
         .s("gm_acoustic_bass")
         .lpf(900)
         .gain(1.5),
-      n("0 ~ 0 2 ~ 3 2 ~")
+
+      // drums
+      s("bd ~ bd ~").gain(1.5),
+      s("~ sd ~ sd").gain(1.35),
+      s("hh*8").gain(.8),
+
+      // lead
+      n("0 ~ 2 ~ 4 ~ 2 ~")
         .set(chords)
-        .mode("root:g1")
+        .anchor("D5")
+        .voicing()
+        .s("gm_epiano1:2")
+        .fm(sine.range(2,8).slow(8))
+        .lpf(sine.range(700,2800).slow(8))
+        .lpq(5)
+        .room(.8)
+        .delay(.3)
+        .gain(.65)
+    )
+  ],
+
+  // variation
+  [8,
+    stack(
+      // chords
+      chords
+        .voicing()
+        .s("gm_epiano1:2")
+        .phaser(5)
+        .room(.8)
+        .delay(.25)
+        .gain(.85),
+
+      // bass
+      n("0 0 ~ 2 ~ 3 2 4")
+        .set(chords)
+        .mode("root:g2")
         .voicing()
         .s("gm_acoustic_bass")
-        .lpf(550)
-        .gain(.8),
+        .lpf(1100)
+        .gain(1.5),
+
+      // drums
+      s("bd ~ bd bd").gain(1.55),
+      s("~ sd ~ sd").gain(1.4),
+      s("hh*8").gain(.85),
+      s("~ ~ cp ~").gain(.5),
+
+      // synth
+      n("<0 2 4 7 4 2 0 2>*2")
+        .set(chords)
+        .mode("root:g4")
+        .voicing()
+        .s("sawtooth")
+        .lpf(sine.range(900,3200).slow(8))
+        .phaser(2)
+        .delay(.25)
+        .room(.6)
+        .gain(.22)
+    )
+  ],
+
+  // pre chorus
+  [8,
+    stack(
+      // chords
+      chords
+        .voicing()
+        .s("gm_epiano1:1")
+        .phaser(2)
+        .room(.9)
+        .gain(.7),
+
+      // bass
+      n("0 ~ 0 ~ 2 ~ 3 ~")
+        .set(chords)
+        .mode("root:g2")
+        .voicing()
+        .s("gm_acoustic_bass")
+        .lpf(650)
+        .gain(.85),
+
+      // drums
+      s("bd ~ ~ bd").gain(1.0),
+      s("~ ~ sd ~").gain(.75),
+      s("hh*4").gain(.25)
+    )
+  ],
+
+  // chorus
+  [8,
+    stack(
+      // chords
+      chords
+        .voicing()
+        .s("gm_epiano1:1")
+        .phaser(4)
+        .room(.7)
+        .gain(1.2),
+
+      // bass
+      n("0 ~ 0 2 3 ~ 3 2")
+        .set(chords)
+        .mode("root:g2")
+        .voicing()
+        .s("gm_acoustic_bass")
+        .lpf(950)
+        .gain(1.55),
+
+      // drums
+      s("bd ~ bd ~").gain(1.6),
+      s("~ sd ~ sd").gain(1.4),
+      s("hh*8").gain(.85),
+
+      // lead
       n(`
         <
           [0 ~ 2 ~ 4 ~ 2 ~]
@@ -108,12 +185,11 @@ arrange(
         .anchor("D5")
         .voicing()
         .s("gm_epiano1:2")
-        .fm(sine.range(2,8).slow(8))
-        .lpf(sine.range(700,2800).slow(8))
-        .lpq(5)
-        .room(.8)
-        .delay(.3)
-        .gain(.65)
+        .fm(sine.range(4,10).slow(6))
+        .lpf(sine.range(900,3500).slow(6))
+        .room(.9)
+        .delay(.4)
+        .gain(.55)
     )
   ]
 )
